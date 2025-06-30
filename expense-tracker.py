@@ -2,7 +2,7 @@ from __future__ import annotations
 import argparse
 import datetime
 import json
-from rich import print
+from tabulate import tabulate
 
 class Expense():
     def __init__(self, expense_id: int, user: User, description: str, amount: float):
@@ -46,11 +46,11 @@ class User():
         self.expenses.append(expense.to_dic())
         with open('expenses.json','w') as file:
             json.dump(self.expenses, file, indent=4)
-        print(f"Expense [bold green]added[/bold green] succesfully (ID: {expense_id})")
+        print(f"Expens eadded succesfully (ID: {expense_id})")
 
     def update_expense(self, expense_id: int, description: str = None, amount: float = None):
         if description is None and amount is None:
-            print("[bold red]ERROR[/bold red]: Please change at least the description or the amount of the expense.")
+            print("ERROR: Please change at least the description or the amount of the expense.")
             return
         for expense in self.expenses:
             if expense['expense_id'] == expense_id:
@@ -62,7 +62,7 @@ class User():
                     json.dump(self.expenses, file, indent=4)
                 print(f"Expense updated succesfully (ID: {expense_id})")
                 return
-        print(f"[bold red]ERROR[/bold red]: Couldn't find expense with id: ID{expense_id}")
+        print(f"ERROR: Couldn't find expense with id: ID{expense_id}")
 
     def delete_expense(self, expense_id: int) -> None:
         for expense in self.expenses:
@@ -70,16 +70,15 @@ class User():
                 self.expenses.remove(expense)
                 with open('expenses.json','w') as file:
                     json.dump(self.expenses, file, indent=4)
-                print(f"Expense [bold magenta]deleted[/bold magenta] succesfully (ID: {expense_id})")
+                print(f"Expense deleted succesfully (ID: {expense_id})")
                 return
-        print(f"[bold red]ERROR[/bold red]: Couldn't find expense with id: ID{expense_id}")
+        print(f"ERROR: Couldn't find expense with id: ID{expense_id}")
 
     def list_all(self) -> None:
-        print(f"ID\tDate\tDescription\tAmount")
-        for expense in self.expenses:
-            exp_string = f"{expense['expense_id']}\tDATEPLACEHOLDER\t{expense['description']}\t{expense['amount']:.2f}$"
-            print(exp_string)
-    
+        headers = ['ID', 'Date', 'Description', 'Amount']
+        rows = [[expense['expense_id'], expense['date'], expense['description'], f"{expense['amount']:.2f}$"] for expense in self.expenses]
+        print(tabulate(rows, headers))
+
     def summary(self) -> None:
         total_expenses = 0
         for expense in self.expenses:
