@@ -2,8 +2,7 @@ from __future__ import annotations
 import argparse
 import datetime
 import json
-
-REGISTERED_USERS = 0
+from rich import print
 
 class Expense():
     def __init__(self, expense_id: int, user: User, description: str, amount: float):
@@ -38,16 +37,19 @@ class User():
         return expenses
 
     def create_expense(self, description: str, amount: float):
-        expense_id = len(self.expenses)
+        if len(self.expenses) == 0:
+            expense_id = 0
+        else:
+            expense_id = self.expenses[-1]['expense_id']+1
         expense = Expense(expense_id=expense_id, user=self, description=description, amount=amount)
         self.expenses.append(expense.to_dic())
         with open('expenses.json','w') as file:
             json.dump(self.expenses, file, indent=4)
-        print(f"Expense added succesfully (ID: {expense_id})")
+        print(f"Expense [bold green]added[/bold green] succesfully (ID: {expense_id})")
 
     def update_expense(self, expense_id: int, description: str = None, amount: float = None):
         if description is None and amount is None:
-            print("Please change at least the description or the amount of the expense.")
+            print("[bold red]ERROR[/bold red]: Please change at least the description or the amount of the expense.")
             return
         for expense in self.expenses:
             if expense['expense_id'] == expense_id:
@@ -59,7 +61,7 @@ class User():
                     json.dump(self.expenses, file, indent=4)
                 print(f"Expense updated succesfully (ID: {expense_id})")
                 return
-        print(f"ERROR: Couldn't find expense with id: ID{expense_id}")
+        print(f"[bold red]ERROR[/bold red]: Couldn't find expense with id: ID{expense_id}")
 
     def delete_expense(self, expense_id: int) -> None:
         for expense in self.expenses:
@@ -67,9 +69,9 @@ class User():
                 self.expenses.remove(expense)
                 with open('expenses.json','w') as file:
                     json.dump(self.expenses, file, indent=4)
-                print(f"Expense deleted succesfully (ID: {expense_id})")
+                print(f"Expense [bold magenta]deleted[/bold magenta] succesfully (ID: {expense_id})")
                 return
-        print(f"ERROR: Couldn't find expense with id: ID{expense_id}")
+        print(f"[bold red]ERROR[/bold red]: Couldn't find expense with id: ID{expense_id}")
 
     def list_all(self) -> None:
         print(f"ID\tDate\tDescription\tAmount")
