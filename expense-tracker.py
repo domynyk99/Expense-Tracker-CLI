@@ -53,14 +53,18 @@ class User():
                 with open('expenses.json','w') as file:
                     json.dump(self.expenses, file, indent=4)
                 print(f"Expense updated succesfully (ID: {expense_id})")
-
+                return
+        print(f"ERROR: Couldn't find expense with id: ID{expense_id}")
 
     def delete_expense(self, expense_id: int) -> None:
-        if not expense_id in self.expenses.keys():
-            print(f"ERROR: The given expense_id does not exist.")
-            return
-        print(f"Deleting Expense (ID: {expense_id})...")
-        self.expenses.pop(expense_id)
+        for expense in self.expenses:
+            if expense['expense_id'] == expense_id:
+                self.expenses.remove(expense)
+                with open('expenses.json','w') as file:
+                    json.dump(self.expenses, file, indent=4)
+                print(f"Expense deleted succesfully (ID: {expense_id})")
+                return
+        print(f"ERROR: Couldn't find expense with id: ID{expense_id}")
 
     def list_all(self) -> None:
         print(f"ID\tDate\tDescription\tAmount")
