@@ -22,6 +22,7 @@ class Expense():
     def to_dic(self) -> dict:
         expense_dic = {
             'expense_id': self.expense_id,
+            'date': datetime.datetime.now().strftime("%d-%m-%Y"),
             'description': self.description,
             'amount': self.amount
         }
