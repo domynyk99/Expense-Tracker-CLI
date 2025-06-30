@@ -69,13 +69,14 @@ class User():
     def list_all(self) -> None:
         print(f"ID\tDate\tDescription\tAmount")
         for expense in self.expenses:
-            print(self.expenses[expense])
+            exp_string = f"{expense['expense_id']}\tDATEPLACEHOLDER\t{expense['description']}\t{expense['amount']:.2f}$"
+            print(exp_string)
     
     def summary(self) -> None:
         total_expenses = 0
         for expense in self.expenses:
-            total_expenses += self.expenses[expense].amount
-        print(f"Total expenses: {total_expenses}$")
+            total_expenses += expense['amount']
+        print(f"Total expenses: {total_expenses:.2f}$")
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser()
