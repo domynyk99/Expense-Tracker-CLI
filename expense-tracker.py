@@ -45,11 +45,16 @@ class User():
             json.dump(self.expenses, file, indent=4)
         print(f"Expense added succesfully (ID: {expense_id})")
 
-    def update_expense(self, expense_id: int, description: str, amount: float):
+    def update_expense(self, expense_id: int, description: str = None, amount: float = None):
+        if description is None and amount is None:
+            print("Please change at least the description or the amount of the expense.")
+            return
         for expense in self.expenses:
             if expense['expense_id'] == expense_id:
-                expense['description'] = description
-                expense['amount'] = amount
+                if description is not None:
+                    expense['description'] = description
+                if amount is not None:
+                    expense['amount'] = amount
                 with open('expenses.json','w') as file:
                     json.dump(self.expenses, file, indent=4)
                 print(f"Expense updated succesfully (ID: {expense_id})")
@@ -90,8 +95,8 @@ if __name__ == "__main__":
     #Create parser for update command
     parser_update = subparsers.add_parser('update', help="Update/Change an already existing expense")
     parser_update.add_argument('-i', '--expense_id', required=True, type=int, help="Specify the expense id of the expense you want to update")
-    parser_update.add_argument('-d', '--description', required=True, type=str, help="Specify a description for your expense")
-    parser_update.add_argument('-a', '--amount', required=True, type=float, help="Specify the amount of your expense")
+    parser_update.add_argument('-d', '--description', required=False, type=str, help="Specify a description for your expense")
+    parser_update.add_argument('-a', '--amount', required=False, type=float, help="Specify the amount of your expense")
 
     #Create parser for delete command
     parser_delete = subparsers.add_parser('delete', help="Delete an already existing expense")
