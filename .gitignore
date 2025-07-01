@@ -194,4 +194,4 @@ cython_debug/
 .cursorindexingignore
 
 #JSON Files to store expense-tracker.data
-.json
+expenses.json
