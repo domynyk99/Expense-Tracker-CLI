@@ -1,0 +1,44 @@
+import argparse
+from command_loader import CommandLoader
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser()
+    subparsers = parser.add_subparsers(dest='command', help='Sub-commands')
+
+    #Create parser for add command
+    parser_add = subparsers.add_parser('add', help="Add new expenses to your list")
+    parser_add.add_argument('-d', '--description', required=True, type=str, help="Specify a description for your expense")
+    parser_add.add_argument('-a', '--amount', required=True, type=float, help="Specify the amount of your expense")
+
+    #Create parser for update command
+    parser_update = subparsers.add_parser('update', help="Update/Change an already existing expense")
+    parser_update.add_argument('-i', '--expense_id', required=True, type=int, help="Specify the expense id of the expense you want to update")
+    parser_update.add_argument('-d', '--description', required=False, type=str, help="Specify a description for your expense")
+    parser_update.add_argument('-a', '--amount', required=False, type=float, help="Specify the amount of your expense")
+
+    #Create parser for delete command
+    parser_delete = subparsers.add_parser('delete', help="Delete an already existing expense")
+    parser_delete.add_argument('-i', '--expense_id', required=True, type=int, help="Specify the expense id of the expense you want to delete")
+
+    #Create parser for list argument
+    parser_list = subparsers.add_parser('list', help="List all existing expenses")
+
+    #Create parser for summary argument
+    parser_summary = subparsers.add_parser('summary', help="Prints the sum of all your expenses")
+    parser_summary.add_argument('--month', required=False, help="Summarize all expenses for a specified month")
+
+    args = parser.parse_args()
+
+    c_loader = CommandLoader()
+    
+    match args.command:
+        case 'add':
+            c_loader.create_expense(description=args.description, amount=args.amount)
+        case 'update':
+            c_loader.update_expense(expense_id= args.expense_id,description=args.description, amount=args.amount)
+        case 'delete':
+            c_loader.delete_expense(expense_id=args.expense_id)
+        case 'list':
+            c_loader.list_all()
+        case 'summary':
+            c_loader.summary()
