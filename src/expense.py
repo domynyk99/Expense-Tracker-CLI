@@ -1,13 +1,15 @@
 import datetime
 
 class Expense():
-    def __init__(self, expense_id: int, description: str, amount: float, user):
+    def __init__(self, expense_id: int, category: str, description: str, amount: float, user):
         self.expense_id = expense_id
         self.user = user
+        self.category = category
         self.description = description
         self.amount = amount
 
-    def update(self, description: str, amount: float) -> None:
+    def update(self, category: str, description: str, amount: float) -> None:
+        self.category = category
         self.description = description
         self.amount = amount
         print(f"Expense updated successfully (ID: {self.expense_id})")
@@ -19,6 +21,7 @@ class Expense():
         expense_dic = {
             'expense_id': self.expense_id,
             'date': datetime.datetime.now().strftime("%d-%m-%Y"),
+            'category': self.category,
             'description': self.description,
             'amount': self.amount
         }
