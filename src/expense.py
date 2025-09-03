@@ -1,4 +1,4 @@
-import datetime
+from datetime import datetime
 
 class Expense():
     def __init__(self, expense_id: int, category: str, description: str, amount: float, user):
@@ -20,7 +20,7 @@ class Expense():
     def to_dic(self) -> dict:
         expense_dic = {
             'expense_id': self.expense_id,
-            'date': datetime.datetime.now().strftime("%d-%m-%Y"),
+            'date': datetime.now().strftime("%d-%m-%Y"),
             'category': self.category,
             'description': self.description,
             'amount': self.amount

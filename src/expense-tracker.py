@@ -24,11 +24,12 @@ if __name__ == "__main__":
 
     #Create parser for list argument
     parser_list = subparsers.add_parser('list', help="List all existing expenses")
-    parser_list.add_argument('-c', '--category', required=False, help="List all expenses filtered by a specified category")
+    parser_list.add_argument('-c', '--category', type=str, required=False, help="List all expenses filtered by a specified category")
 
     #Create parser for summary argument
     parser_summary = subparsers.add_parser('summary', help="Prints the sum of all your expenses")
     parser_summary.add_argument('-m', '--month', required=False, help="Summarize all expenses for a specified month")
+    parser_summary.add_argument('-y', '--year', type=int, help="Specify a year. If you don't specify a year the current year is set as default value.")
 
     args = parser.parse_args()
 
@@ -44,4 +45,4 @@ if __name__ == "__main__":
         case 'list':
             c_loader.list_all(category=args.category)
         case 'summary':
-            c_loader.summary(month=args.month)
+            c_loader.summary(month=args.month, year=args.year)
