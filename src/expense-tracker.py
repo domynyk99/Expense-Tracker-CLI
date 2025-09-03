@@ -44,4 +44,4 @@ if __name__ == "__main__":
         case 'list':
             c_loader.list_all(category=args.category)
         case 'summary':
-            c_loader.summary()
+            c_loader.summary(month=args.month)

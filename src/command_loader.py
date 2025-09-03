@@ -47,21 +47,97 @@ class CommandLoader():
         if category is None:
             rows = [[expense['expense_id'], expense['date'], expense['category'], expense['description'], f"{expense['amount']:.2f}$"] for expense in self.expenses]
         else:
-            rows = self.filter(category)
+            rows = self.filter_category(category)
             print(f"Expenses filtered by category: {category}")
         print(tabulate(rows, headers))
 
-
-    def summary(self) -> None:
-        total_expenses = 0
-        for expense in self.expenses:
-            total_expenses += expense['amount']
-        print(f"Total expenses: {total_expenses:.2f}$")
-
-    def filter(self, category: str) -> list[str]:
+    def filter_category(self, category: str) -> list[str]:
         rows = []
         for expense in self.expenses:
             if expense['category'] != category:
+                continue
+            rows.append([expense['expense_id'], expense['date'], expense['category'], expense['description'], f"{expense['amount']:.2f}$"])
+        return rows
+
+    def summary(self, month: str = None) -> None:
+        if month is None:
+            total_expenses = 0
+            for expense in self.expenses:
+                total_expenses += expense['amount']
+            print(f"Total expenses: {total_expenses:.2f}$")
+        else:
+            month_expenses = self.summary_specific_month(month)
+            month_string = self.convert_month(month=month, switch=True)
+            print(f"Total expenses for month {month_string}: {month_expenses:.2f}$")
+
+    def summary_specific_month(self, month: str) -> float:
+        month = self.convert_month(month=month, switch=False)
+        if month < 1 | month > 12:
+            return
+        month_str = str(month)
+        if month < 10:
+            month_str = "0" + month_str
+        month_sum = 0
+        for expense in self.expenses:
+            if expense['date'][3:5] != month_str:
+                continue
+            month_sum += expense['amount']
+        return month_sum
+
+    def convert_month(self, month: str, switch: bool):
+        """Converts a month to an int if the switch is set to False. If it is set to True it will return
+        the given month as a string that can later be used for print statements."""
+        month = month.lower().strip()
+        month_number = 0
+        month_string = ""
+        match month:
+            case "january" | "1" | "01":
+                month_number = 1
+                month_string = "January"
+            case "february" | "2" | "02":
+                month_number = 2
+                month_string = "February"
+            case "march" | "3" | "03":
+                month_number = 3
+                month_string = "March"
+            case "april" | "4" | "04":
+                month_number = 4
+                month_string = "April"
+            case "may" | "5" | "05":
+                month_number = 5
+                month_string = "May"
+            case "june" | "6" | "06":
+                month_number = 6
+                month_string = "June"
+            case "july" | "7" | "07":
+                month_number = 7
+                month_string = "July"
+            case "august" | "8" | "08":
+                month_number = 8
+                month_string = "August"
+            case "september" | "9" | "09":
+                month_number = 9
+                month_string = "September"
+            case "october" | "10":
+                month_number = 10
+                month_string = "October"
+            case "november" | "11":
+                month_number = 11
+                month_string = "November"
+            case "december" | "12":
+                month_number = 12
+                month_string = "December"
+            case _:
+                print("ERROR: Check again for spelling mistakes or if your gave a number if it is between 1 and 12.")
+        if switch:
+            return month_string
+        else:
+            return month_number
+    
+    def filter_month(self, month:str) -> list[str]:
+        rows = []
+        for expense in self.expenses:
+            if expense['date'][3:5] != month:
                 continue
             rows.append([expense['expense_id'], expense['date'], expense['category'], expense['description'], f"{expense['amount']:.2f}$"])
         return rows
