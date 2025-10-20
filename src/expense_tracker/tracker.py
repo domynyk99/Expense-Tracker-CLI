@@ -1,9 +1,10 @@
 from tabulate import tabulate
-from expense import Expense
-from utils import load_json, write_to_json
 from datetime import datetime
 
-class CommandLoader():
+from .expense import Expense
+from .utils import load_json, write_to_json
+
+class Tracker():
     def __init__(self):
         self.expenses: list[dict] = load_json()
 

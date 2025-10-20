@@ -1,7 +1,8 @@
 import argparse
-from command_loader import CommandLoader
 
-if __name__ == "__main__":
+from .tracker import Tracker
+
+def main():
     parser = argparse.ArgumentParser()
     subparsers = parser.add_subparsers(dest='command', help='Sub-commands')
 
@@ -33,7 +34,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    c_loader = CommandLoader()
+    c_loader = Tracker()
     
     match args.command:
         case 'add':
