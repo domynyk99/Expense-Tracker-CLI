@@ -14,14 +14,14 @@ def main():
 
     #Create parser for update command
     parser_update = subparsers.add_parser('update', help="Update/Change an already existing expense")
-    parser_update.add_argument('-i', '--expense_id', required=True, type=int, help="Specify the expense id of the expense you want to update")
+    parser_update.add_argument('-i', '--id', required=True, type=int, help="Specify the expense id of the expense you want to update")
     parser_update.add_argument('-c', '--category', required=False, type=str, help="Specify the category of your expense")
     parser_update.add_argument('-d', '--description', required=False, type=str, help="Specify a description for your expense")
     parser_update.add_argument('-a', '--amount', required=False, type=float, help="Specify the amount of your expense")
 
     #Create parser for delete command
     parser_delete = subparsers.add_parser('delete', help="Delete an already existing expense")
-    parser_delete.add_argument('-i', '--expense_id', required=True, type=int, help="Specify the expense id of the expense you want to delete")
+    parser_delete.add_argument('-i', '--id', required=True, type=int, help="Specify the expense id of the expense you want to delete")
 
     #Create parser for list argument
     parser_list = subparsers.add_parser('list', help="List all existing expenses")
@@ -40,9 +40,9 @@ def main():
         case 'add':
             c_loader.create_expense(category=args.category, description=args.description, amount=args.amount)
         case 'update':
-            c_loader.update_expense(expense_id=args.expense_id, category=args.category, description=args.description, amount=args.amount)
+            c_loader.update_expense(expense_id=args.id, category=args.category, description=args.description, amount=args.amount)
         case 'delete':
-            c_loader.delete_expense(expense_id=args.expense_id)
+            c_loader.delete_expense(expense_id=args.id)
         case 'list':
             c_loader.list_all(category=args.category)
         case 'summary':

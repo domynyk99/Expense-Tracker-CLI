@@ -16,7 +16,7 @@ class Tracker():
         expense = Expense(expense_id=expense_id, user=self, category=category, description=description, amount=amount)
         self.expenses.append(expense.to_dic())
         write_to_json(self.expenses)
-        print(f"Expense eadded succesfully (ID: {expense_id})")
+        print(f"Expense added successfully (ID: {expense_id})")
 
     def update_expense(self, expense_id: int, category: str = None, description: str = None, amount: float = None):
         if description is None and amount is None and category is None:
@@ -31,7 +31,7 @@ class Tracker():
                 if category is not None:
                     expense['category'] = category
                 write_to_json(self.expenses)
-                print(f"Expense updated succesfully (ID: {expense_id})")
+                print(f"Expense updated successfully (ID: {expense_id})")
                 return
         print(f"ERROR: Couldn't find expense with id: ID{expense_id}")
 
@@ -40,9 +40,9 @@ class Tracker():
             if expense['expense_id'] == expense_id:
                 self.expenses.remove(expense)
                 write_to_json(self.expenses)
-                print(f"Expense deleted succesfully (ID: {expense_id})")
+                print(f"Expense deleted successfully (ID: {expense_id})")
                 return
-        print(f"ERROR: Couldn't find expense with id: ID{expense_id}")
+        print(f"ERROR: Couldn't find expense with ID: {expense_id}")
 
     def list_all(self, category: str = None) -> None:
         headers = ['ID', 'Date', 'Category', 'Description', 'Amount']
