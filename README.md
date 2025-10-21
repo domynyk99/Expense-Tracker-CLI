@@ -77,6 +77,6 @@ expense-tracker summary --month 10
 
 I built this project to learn more about command-line interfaces using Python's `argparse` module. I also wanted to explore how to save and structure data effectively in a JSON format, and to practice object-oriented design in a small, practical project.
 
-## Additional features for the future
+## Future Improvements
 - Allow users to set a monthly budget and show warnings when approaching or exceeding it  
 - Export expenses to a CSV file
