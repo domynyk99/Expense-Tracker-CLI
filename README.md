@@ -73,7 +73,7 @@ expense-tracker summary --month 10
 # Total expenses for month October: 14.99$
 ```
 
-## Why I build this
+## Why I built this
 
 I built this project to learn more about command-line interfaces using Python's `argparse` module. I also wanted to explore how to save and structure data effectively in a JSON format, and to practice object-oriented design in a small, practical project.
 
