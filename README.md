@@ -39,7 +39,7 @@ Built with Python and `argparse`, this CLI tool lets you easily add, update, del
 ## How to use
 
 ```bash
-expense-tracker add --description "Dinner" --amount 28.74
+expense-tracker add --description Dinner --amount 28.74
 # Expense added succesfully (ID: 0)
 
 expense-tracker add --description "Gym Membership" --category Sports  --amount 14.99
