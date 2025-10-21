@@ -8,7 +8,7 @@ def main():
 
     #Create parser for add command
     parser_add = subparsers.add_parser('add', help="Add new expenses to your list")
-    parser_add.add_argument('-c', '--category', required=True, type=str, help="Specify the category of your expense")
+    parser_add.add_argument('-c', '--category', required=False, type=str, help="Specify the category of your expense (optional)")
     parser_add.add_argument('-d', '--description', required=True, type=str, help="Specify a description for your expense")
     parser_add.add_argument('-a', '--amount', required=True, type=float, help="Specify the amount of your expense")
 

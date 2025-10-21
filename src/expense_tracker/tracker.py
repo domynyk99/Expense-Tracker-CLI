@@ -8,7 +8,7 @@ class Tracker():
     def __init__(self):
         self.expenses: list[dict] = load_json()
 
-    def create_expense(self, category:str, description: str, amount: float):
+    def create_expense(self, description: str, amount: float, category:str = None, ):
         if len(self.expenses) == 0:
             expense_id = 0
         else:
